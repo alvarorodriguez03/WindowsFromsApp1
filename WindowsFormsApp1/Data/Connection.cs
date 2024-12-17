@@ -15,15 +15,16 @@ namespace WindowsFormsApp1.Data
         public static String server = "127.0.0.1";
         public static String dataBase = "login";
         public static String user = "root";
-        public static String pwd = "";
+        public static String pwd = "Octubre200*";
         
         public  static MySqlConnection connMaster = new MySqlConnection();
 
         
-        public static void OpenConnection() { 
-        
-            string connectionString = $"server={server};database={dataBase};user{user};password={pwd}";
-           connMaster = new MySqlConnection(connectionString);
+        public static void OpenConnection() {
+
+            string connectionString = $"server={server};database={dataBase};user={user};password={pwd}";
+
+            connMaster = new MySqlConnection(connectionString);
             
             connMaster.Open();
 

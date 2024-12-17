@@ -20,33 +20,46 @@ namespace WindowsFormsApp1.Data
         public  static MySqlConnection connMaster = new MySqlConnection();
 
         
-        public static void OpenConnection() {
-
-            string connectionString = $"server={server};database={dataBase};user={user};password={pwd}";
-
-            connMaster = new MySqlConnection(connectionString);
-            
-            connMaster.Open();
-
-            if (connMaster.State == ConnectionState.Open)
+        public static MySqlConnection OpenConnection() {
+            try
             {
+                // Cadena de conexión
+                string connectionString = $"server={server};database={dataBase};user={user};password={pwd};SslMode=none;";
 
-                MessageBox.Show("Conexion Establecida");
+                connMaster = new MySqlConnection(connectionString);
+                connMaster.Open();
 
+                if (connMaster.State == ConnectionState.Open)
+                {
+                    MessageBox.Show("Conexión Establecida", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                return connMaster; // Retorna la conexión abierta
             }
-            else {
-                MessageBox.Show("No se ha establacido la conexion");
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al conectar con la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Retorna null si hay un fallo
             }
 
 
-          
+
         }
 
-        public void CloseConnection() { 
-        
-        
-        
+        public static void CloseConnection() {
+
+            try
+            {
+                if (connMaster != null && connMaster.State == ConnectionState.Open)
+                {
+                    connMaster.Close();
+                    MessageBox.Show("Conexión cerrada", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cerrar la conexión: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
     }
